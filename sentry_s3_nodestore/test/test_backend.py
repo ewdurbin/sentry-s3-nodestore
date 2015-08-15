@@ -58,7 +58,7 @@ class S3NodeStoreTestCase(unittest.TestCase):
         results = self.ns.get_multi(node_ids)
 
         self.assertEqual(results, {node_ids[0]: {'bar': 'foo'},
-                                  node_ids[1]: {'baz': 'bar'}})
+                                   node_ids[1]: {'baz': 'bar'}})
 
     def test_delete(self):
         node_id = self.ns.create({'foo': 'bar'})

@@ -25,6 +25,7 @@ def retry(attempts, func, *args, **kwargs):
             raise
     raise
 
+
 def connect_s3(bucket_name, region=None, validate=False,
                aws_access_key_id=None, aws_secret_access_key=None):
     if region is None:
