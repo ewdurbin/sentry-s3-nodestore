@@ -25,19 +25,26 @@ def retry(attempts, func, *args, **kwargs):
             raise
     raise
 
-def connect_s3(bucket_name, region=None, validate=False):
+def connect_s3(bucket_name, region=None, validate=False,
+               aws_access_key_id=None, aws_secret_access_key=None):
     if region is None:
-        conn = boto.connect_s3()
+        conn = boto.connect_s3(aws_access_key_id=aws_access_key_id,
+                               aws_secret_access_key=aws_secret_access_key)
     else:
-        conn = boto.s3.connect_to_region(region)
+        conn = boto.s3.connect_to_region(region,
+                                         aws_access_key_id=aws_access_key_id,
+                                         aws_secret_access_key=aws_secret_access_key)
     return conn.get_bucket(bucket_name, validate=validate)
 
 
 class S3NodeStorage(NodeStorage):
 
-    def __init__(self, bucket_name, region=None, max_retries=3):
+    def __init__(self, bucket_name, region=None, max_retries=3,
+                 aws_access_key_id=None, aws_secret_access_key=None):
         self.max_retries = max_retries
-        self.bucket = connect_s3(bucket_name, region=region)
+        self.bucket = connect_s3(bucket_name, region=region,
+                                 aws_access_key_id=aws_access_key_id,
+                                 aws_secret_access_key=aws_secret_access_key)
 
     def _put(self, node_id, data):
         key = boto.s3.key.Key(self.bucket)
