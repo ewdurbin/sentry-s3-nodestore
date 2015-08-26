@@ -40,7 +40,7 @@ def connect_s3(bucket_name, region=None, validate=False,
 
 class S3NodeStorage(NodeStorage):
 
-    def __init__(self, bucket_name, region=None, max_retries=3,
+    def __init__(self, bucket_name=None, region=None, max_retries=3,
                  aws_access_key_id=None, aws_secret_access_key=None):
         self.max_retries = max_retries
         self.bucket = connect_s3(bucket_name, region=region,
